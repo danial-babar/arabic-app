@@ -31,7 +31,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Enter your question in Arabic"
           className={`border border-gray-300 px-4 py-2 rounded-md text-[#000] w-full ${
-            isFocused ? "h-12" : "h-8"
+            isFocused ? "md:h-20" : "md:h-12"
           } sm:h-16`}
           style={{ textAlign: "right" }}
         />
