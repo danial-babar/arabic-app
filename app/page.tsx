@@ -14,7 +14,7 @@ const Page = (props: Props) => {
     return null;
   }
   return (
-    <div>
+    <div className="bg-white">
       <Index />
     </div>
   );
