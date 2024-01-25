@@ -22,18 +22,30 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
     }
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (searchBoxRef.current && !searchBoxRef.current.contains(event.target)) {
-      setIsFocused(false);
-    }
-  };
+  // const handleClickOutside = (event: MouseEvent) => {
+  //   if (searchBoxRef.current && !searchBoxRef.current.contains(event.target)) {
+  //     setIsFocused(false);
+  //   }
+  // };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchBoxRef.current && !(searchBoxRef.current as HTMLDivElement).contains(event.target as Node)) {
+        setIsFocused(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   const buttonSpring = useSpring({
     left: isFocused ? 10 : 50,

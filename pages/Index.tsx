@@ -156,9 +156,9 @@ const Home: React.FC = () => {
             <FaArrowLeft size={20} className=" " />
             <h2 className=" ml-2 ]">Back </h2>
           </div>
-          {dataArray?.map((item: any) => {
+          {dataArray?.map((item: any, index:number) => {
             return (
-              <div>
+              <div key={index}>
                 <div className="mx-auto max-w-screen-xl p-[20px] md:p-[100px] bg-[#F9F9F9] items-center justify-center rounded-lg mt-5 border-2 border-[#c8c8c856]">
                   <h1 className="sm:1xl md:text-3xl xl:text-3xl 2xl:text-4xl text-[#375438] text-center font-[800] md:leading-[40px] xl:leading-[40px] 2xl:leading-[60px]">
                     وَلَا تَأْكُلُوا أَمْوَالَكُم بَيْنَكُم بِالْبَاطِلِ
