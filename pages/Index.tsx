@@ -5,10 +5,11 @@ import SearchBox from "../components/SearchBox";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useSpring, animated } from "react-spring";
-import { FaArrowLeft } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa6";
+import { FaTwitter } from "react-icons/fa";
+
 const Home: React.FC = () => {
   const [query, setQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -22,7 +23,9 @@ const Home: React.FC = () => {
       console.log("Searching for:", query);
     }
   };
+
   const dataArray = [1, 2, 3];
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSearch(query);
@@ -64,6 +67,7 @@ const Home: React.FC = () => {
       };
     }
   }, [isSearch]);
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -73,90 +77,102 @@ const Home: React.FC = () => {
 
   const buttonSpring = useSpring({
     left: isFocused ? 10 : 50,
-    // opacity: isFocused ? 1 : 0.2,
   });
+
   const box = useSpring({
     left: isFocused ? 10 : 50,
-    // opacity: isFocused ? 100 : 0,
   });
+
   const borderColorClass = isFocused ? "border-[#49CAD2]" : "border-[#706f6f]";
   const btnColor = query?.length > 0 ? "bg-[#49CAD2]" : "bg-[#dbdbdb]";
+
   const onBackClick = () => {
     setIsSearch(false);
     setTypedText("");
     setIsFocused(false);
   };
+
   return (
-    <div className="pb-10">
+    <div>
       <Head>
         <title>Your Page Title</title>
       </Head>
-      <div className="w-full items-center">
-        <hr className="w-full border-t border-t-[#000] absolute top-14" />
-        <div className="relative z-1">
-          <Image
-            src={"/Images/logo.png"}
-            alt="Logo"
-            className="mx-auto"
-            width={100}
-            height={100}
-          />
-        </div>
-      </div>
+
       {!isSearch ? (
-        <div className="mx-auto max-w-screen-xl p-4 relative">
-          <div className="relative rounded-[20px] overflow-hidden">
-            <Image
-              src={"/Images/banner.jpg"}
-              alt="Banner"
-              className="w-full"
-              width={500}
-              height={2}
-            />
-            {/* Black shape with low opacity */}
-            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-40"></div>
+        <div className="pb-10 h-screen overflow:hidden bg-white">
+          {/* Background Image */}
+          <Image
+            src={"/Images/banner.jpg"}
+            alt="Banner"
+            className="absolute top-0 left-0 z-0"
+            layout="fill"
+            objectFit="cover"
+          />
+          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-40"></div>
+
+          <div className="w-full items-center">
+            <hr className="w-full border-t border-t-[#fff] absolute top-14" />
+            <div className="relative z-1">
+              <Image
+                src={"/Images/logo.png"}
+                alt="Logo"
+                className="mx-auto"
+                width={100}
+                height={100}
+              />
+            </div>
           </div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  md:w-[600px] w-full p-4 flex flex-col items-center">
-            <div className="text-center">
-              <h1 className="mb-4 sm:1xl md:text-3xl xl:text-3xl 2xl:text-4xl text-[#ffff]">
-                (هُدًى لِّلنَّاسِ وَ بَیِّنٰتٍ مِّنَ الْهُدٰى وَ الْفُرْقَانِۚ)
-              </h1>
-              <div
-                ref={searchBoxRef}
-                className={`relative flex bg-white border w-full md:w-[600px] items-center justify-end rounded-md ${borderColorClass}`}
-              >
-                <animated.button
-                  style={buttonSpring}
-                  onClick={() => handleSearch(query)}
-                  className={`${btnColor} text-white p-2 rounded-full mr-3 w-10 h-10 absolute top-1/2 transform -translate-y-1/2 md:absolute md:top-1/2`}
+
+          <div className="mx-auto max-w-screen-xl p-4 relative">
+            {/* <div className="relative rounded-[20px] overflow-hidden">
+            
+              <div className="absolute top-0 left-0 w-full h-full bg-black opacity-40"></div>
+            </div> */}
+            <div className="absolute top-[200px] left-1/2 transform -translate-x-1/2 -translate-y-1/2  md:w-[600px] w-full p-4 flex flex-col items-center">
+              <div className="text-center">
+                <h1 className="mb-4 sm:1xl md:text-3xl xl:text-3xl 2xl:text-4xl text-[#ffff]">
+                  (هُدًى لِّلنَّاسِ وَ بَیِّنٰتٍ مِّنَ الْهُدٰى وَ
+                  الْفُرْقَانِۚ)
+                </h1>
+                <div
+                  ref={searchBoxRef}
+                  className={`relative flex bg-white border w-full md:w-[600px] items-center justify-end rounded-md ${borderColorClass}`}
                 >
-                  <FaArrowLeft size={20} />
-                </animated.button>
-                <input
-                  type="text"
-                  value={query}
-                  onFocus={() => setIsFocused(true)}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="..... اکتب ھنا"
-                  className={`px-5 py-4 md:w-[500px] text-[#000] text-right rounded-md w-full focus:outline-none li ${
-                    isFocused ? "md:h-32" : "md:h-14"
-                  } sm:h-16 border-0`}
-                />
+                  <animated.button
+                    style={buttonSpring}
+                    onClick={() => handleSearch(query)}
+                    className={`${btnColor} text-white p-2 rounded-full mr-3 w-10 h-10 absolute top-1/2 transform -translate-y-1/2 md:absolute md:top-1/2`}
+                  >
+                    <FaArrowLeft size={20} />
+                  </animated.button>
+                  <input
+                    type="text"
+                    value={query}
+                    onFocus={() => setIsFocused(true)}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="..... اکتب ھنا"
+                    className={`px-5 py-4 md:w-[500px] text-[#000] text-right rounded-md w-full focus:outline-none li ${
+                      isFocused ? "md:h-32" : "md:h-14"
+                    } sm:h-16 border-0`}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <>
-          <div
-            className="mx-auto w-full max-w-screen-xl p-4 flex items-center  cursor-pointer text-[#000] hover:text-[#0165fc]"
-            onClick={onBackClick}
-          >
-            <FaArrowLeft size={20} className=" " />
-            <h2 className=" ml-2 ]">Back </h2>
+        <div className="pb-10 h-full overflow bg-white">
+          <div className="mx-auto w-full max-w-screen-xl p-4 flex items-center">
+            <div
+              className="flex items-center cursor-pointer text-[#000] hover:text-[#0165fc]"
+              onClick={onBackClick}
+            >
+              <FaArrowLeft size={20} className=" " />
+              <h2 className=" ml-2 ]">Back </h2>
+            </div>
           </div>
-          {dataArray?.map((item: any, index:number) => {
+          {dataArray?.map((item: any, index: number) => {
             return (
               <div key={index}>
                 <div className="mx-auto max-w-screen-xl p-[20px] md:p-[100px] bg-[#F9F9F9] items-center justify-center rounded-lg mt-5 border-2 border-[#c8c8c856]">
@@ -205,7 +221,7 @@ const Home: React.FC = () => {
               </div>
             );
           })}
-        </>
+        </div>
       )}
     </div>
   );
